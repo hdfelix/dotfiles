@@ -12,7 +12,7 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " let Vundle manage Vundle			" required!
-Bundle 'gmarik/vundlel'
+Bundle 'gmarik/vundle'
 
 " My bundles here:
 Bundle 'scrooloose/nerdtree'
