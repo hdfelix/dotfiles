@@ -21,12 +21,14 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'vim-scripts/ZoomWin'
 Bundle 'scrooloose/syntastic'
 Bundle 'kikijump/tslime.vim'
+Bundle 'vim-pandoc/vim-pandoc'
 
 " original repos on GitHub
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 Bundle 'tpope/vim-rails.git'
+Bundle 'tpope/vim-bundler.git'
 
 " vim-scripts repos
 Bundle 'L9'
@@ -60,9 +62,9 @@ set nocompatible   " Turn off compatibility with VI.
 set modelines=0    "Turn modelines off in files; turn on if needed.
 
 "Set tab stops
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 set noexpandtab
 
 "From http://stevelosh.com/blog/2010/09/coming-home-to-vim/#why-i-came-back-to-vimset scrolloff=3
