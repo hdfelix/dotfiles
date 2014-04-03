@@ -3,7 +3,7 @@
 "######################
 
 set nocompatible				" be iMproved
-filetype off					" required! (not needed with VIM 7.3.340+)
+filetype on						" required! (not needed with VIM 7.3.340+; Ruby suposedly needs it on)
 
 syntax on
 syntax enable
@@ -28,6 +28,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 Bundle 'tpope/vim-rails.git'
+Bundle 'vim-ruby/vim-ruby'
 Bundle 'tpope/vim-bundler.git'
 
 " vim-scripts repos
