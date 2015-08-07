@@ -87,7 +87,7 @@ let mapleader =","
 
 "Colors
 set background=dark
-colorscheme desert
+colorscheme Tomorrow-Night "desert
 
 " Pretify JSON
 map <leader>jt <Esc>:%!json_xs -f json -t json-pretty<CR>
