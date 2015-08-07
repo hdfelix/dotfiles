@@ -26,3 +26,11 @@
 	wtf = !~/code/git-wtf/git-wtf
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	lg2 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	undo-commit = reset --soft HEAD^
+	unstage = reset --
+	g = grep --break --heading --line-number
+[credential]
+	helper = osxkeychain
+[grep]
+	extendRegexp = true
+	lineNumber = true

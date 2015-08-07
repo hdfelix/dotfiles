@@ -1,63 +1,191 @@
-"######################
-"Source: http://stevelosh.com/blog/2010/09/coming-home-to-vim/#why-i-came-back-to-vim
-"######################
-
 set nocompatible				" be iMproved
-filetype on						" required! (not needed with VIM 7.3.340+; Ruby suposedly needs it on)
+filetype off
 
-syntax on
-syntax enable
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" let Vundle manage Vundle                  " required!
+Plugin 'gmarik/Vundle.vim'
 
-" let Vundle manage Vundle			" required!
-Bundle 'gmarik/vundle'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-haml'
+Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-rails'
+Plugin 'int3/vim-extradite'
 
-" My bundles here:
-Bundle 'scrooloose/nerdtree'
-Bundle 'mileszs/ack.vim'
-Bundle 'kien/ctrlp.vim'
-Bundle 'vim-scripts/ZoomWin'
-Bundle 'scrooloose/syntastic'
-Bundle 'kikijump/tslime.vim'
-Bundle 'vim-pandoc/vim-pandoc'
+Plugin 'thoughtbot/vim-rspec'
+Plugin 'tpope/vim-dispatch'
+Plugin 'benmills/vimux'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'christoomey/vim-tmux-runner'
+Plugin 'mattn/emmet-vim'
+Plugin 'AutoTag'
 
-" original repos on GitHub
-Bundle 'tpope/vim-fugitive'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'tpope/vim-rails.git'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'tpope/vim-bundler.git'
-
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'scrooloose/nerdtree'
+Plugin 'mileszs/ack.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'vim-scripts/ZoomWin'
+Plugin 'scrooloose/syntastic'
+Plugin 'kana/vim-fakeclip'
+Plugin 'jgdavey/tslime.vim'
+" Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'ngmy/vim-rubocop'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'rizzatti/dash.vim'
+Plugin 'nelstrom/vim-markdown-folding'
+Plugin 'JSON.vim'
+Plugin 'ruby-matchit'
+Plugin 'matchit.zip'
+" Plugin 'textobj-rubyblock'
+" Plugin 'godlygeek/tabular'
+"
 " vim-scripts repos
-Bundle 'L9'
-Bundle 'FuzzyFinder'
+" Plugin 'L9'
+" Plugin 'FuzzyFinder'
 
 " non-GitHub repos
-Bundle 'git://git.wincent.com/command-t.git'
+Plugin 'git://git.wincent.com/command-t.git'
 
-" Git repos on your local machine (i.e. when working on your own plugin)
-"Bundle 'file:///Users/gmarik/path/to/plugin'
-" " ...
+" All this stuff is for snippets
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+
+call vundle#end()
+filetype plugin indent on		" required!
 
 " Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install (update) bundles
-" :BundleSearch(!) foo - search (or refresh cache first) for foo
-" :BundleClean(!)      - confirm (or auto-approve) removal of unused bundle
+" :PluginList          - list configured bundles
+" :PluginInstall(!)    - install (update) bundles
+" :PluginSearch(!) foo - search (or refresh cache first) for foo
+" :PluginClean(!)      - confirm (or auto-approve) removal of unused bundle
 
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle commands are not allowed.
 
-filetype plugin indent on		" required!
+" fakeclip settings
+let g:fakeclip_terminal_multiplexer_type = 'tmux'
+
+" ctrl_p ignore folders
+let g:ctrlp_custom_ignore =  'tags\|bin\|tmp\|log\:coverage'
+
+" rubocop settings
+"let vimrubocop_config='config/rubocop/rubocop.yml'
+
+"using ag (the silver searcher) with ack.vim
+let g:ackprg = 'ag --nogroup --nocolor --column'
 
 let mapleader =","
 
 "Colors
 set background=dark
 colorscheme desert
+
+" Pretify JSON
+map <leader>jt <Esc>:%!json_xs -f json -t json-pretty<CR>
+au BufRead,BufNewFile *.json set filetype=json
+
+" Index ctags from any project, including those outside Rails
+map <Leader>ct :!ctags -R .<CR>
+
+" Git blame
+map <Leader>b :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+
+" Open edit command at current directory
+map <Leader>e :e <C-R>=expand("%:p:h") . '/'<CR>
+
+" Fix indents on entire file
+map <Leader>ii mmgg=G`m<CR>
+
+" Paste from clipboard with proper indentation
+map <Leader>p :set paste<CR>o<esc>"*]p:set nopaste<cr>
+
+" Set up vim to copy text
+map <Leader>co :set nonu nornu<CR>,n<CR>
+
+" ...
+map <Leader>nco :set nu rnu<CR>,n<CR>
+
+" Timelapse?
+map <leader>h :call TimeLapse() <cr> 
+
+" tmux-runner
+
+"from Chris Toomey's dotfiles (test these out)
+let g:VtrClearBeforeSend = 0
+let g:VtrUseVtrMaps = 1
+let g:VtrGitCdUpOnOpen = 0
+let g:VtrPercentage = 30
+
+nnoremap <leader>sd :VtrSendCommand<cr>
+nnoremap <Leader>fr :VtrFocusRunner<cr>
+nnoremap <leader>va :VtrAttachToPane<cr>
+
+nmap <leader>fs :VtrFlushCommand<cr>:VtrSendCommandToRunner<cr>
+nmap <C-f> :VtrSendLineToRunner<cr>
+vmap <C-f> <Esc>:VtrSendSelectedToRunner<cr>
+
+nnoremap <leader>rj :VtrSendCommandToRunner be rake konacha<cr>
+nnoremap <leader>rs :VtrSendCommandToRunner rake<cr>
+
+nmap <leader>osr :VtrOpenRunner {'orientation': 'h', 'percentage': 50}<cr>
+
+nnoremap <leader>sd :VtrSendCTRLD<cr>
+nnoremap <leader>q :VtrSendCommandToRunner <cr>
+nnoremap <leader>sf :w<cr>:call SendFileViaVtr()<cr>
+nnoremap <leader>sl :VtrSendCommandToRunner <cr>
+
+function! SendFileViaVtr()
+  let runners = {
+    \ 'haskell': 'ghci',
+    \ 'ruby': 'ruby',
+    \ 'javascript': 'node',
+    \ 'python': 'python',
+    \ 'sh': 'sh'
+    \ }
+  if has_key(runners, &filetype)
+    let runner = runners[&filetype]
+    let local_file_path = expand('%')
+    execute join(['VtrSendCommandToRunner', runner, local_file_path])
+  else
+    echoerr 'Unable to determine runner'
+  endif
+endfunction
+
+" let g:rspec_command = 'call Send_to_Tmux("bundle exec rspec {spec}\n")'
+" let g:rspec_command = 'call Send_to_Tmux("bin/rspec {spec}\n")'
+
+" vim-rspec config
+" zsh version
+let g:rspec_command = "VtrSendCommandToRunner! bin/rspec -fp -t ~skip {spec}"
+
+" bash version
+" let g:rspec_command = \"VtrSendCommandToRunner! bin/rspec -fp -t ~skip {spec}"
+
+" vim-rspec mappings
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>g :call RunAllSpecs()<CR>
+
+" To run in last session of current iTerm terminal
+"let g:rspec_runner = "os_x_iterm"
+
+set noswapfile " remove swap file feature
+
+" Colors
+set background=dark
+colorscheme Tomorrow-night
+
+set history=500
 
 set nocompatible   " Turn off compatibility with VI.
 set modelines=0    "Turn modelines off in files; turn on if needed.
@@ -160,7 +288,7 @@ nnoremap <tab> %
 "Remap exiting  instert mode (Esc)
 inoremap jj <esc>
 
-"Unrap the arrow keys (to get used to not using them in insert mode
+" Unrap the arrow keys (to get used to not using them in insert mode)
 no <down> <Nop>
 no <left> <Nop>
 no <right> <Nop>
