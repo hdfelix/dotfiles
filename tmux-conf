@@ -8,7 +8,7 @@ set -g prefix C-y
 set -s escape-time 1
 
 # Reload tmux conf with Prefix r
-bind r source-file ~/.tmux.conf \; display-message ".tmux.conf reloaded!"
+bind r source-file ~/.tmux.conf \ # ; display-message ".tmux.conf reloaded!"
 
 ### SESSIONS
 bind-key C-j choose-tree
@@ -22,6 +22,7 @@ set -g base-index 1
 
 # use current path when creating new window
 bind c new-window -c '#{pane_current_path}'
+
 # bind c new-window -c "#PWD"
 bind S command-prompt -p ssh: "new-window -n %1 'ssh %1'"
 

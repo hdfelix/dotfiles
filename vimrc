@@ -183,7 +183,7 @@ set noswapfile " remove swap file feature
 
 " Colors
 set background=dark
-colorscheme Tomorrow-night
+colorscheme Tomorrow-Night
 
 set history=500
 
