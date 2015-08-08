@@ -1,10 +1,13 @@
+" ==========================================================
+" Vundle settings
+" ==========================================================
 set nocompatible				" be iMproved
 filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#begin()
 
-" let Vundle manage Vundle                  " required!
+" let Vundle manage Vundle								" required
 Plugin 'gmarik/Vundle.vim'
 
 Plugin 'tpope/vim-fugitive'
@@ -59,9 +62,6 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 
-call vundle#end()
-filetype plugin indent on		" required!
-
 " Brief help
 " :PluginList          - list configured bundles
 " :PluginInstall(!)    - install (update) bundles
@@ -69,7 +69,21 @@ filetype plugin indent on		" required!
 " :PluginClean(!)      - confirm (or auto-approve) removal of unused bundle
 
 " see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle commands are not allowed.
+" NOTE: comments after Vundle commands are not allowed.
+
+" All plugins must be added before the following line
+call vundle#end()						" required
+filetype plugin indent on		" required
+
+" ==========================================================
+" Ruby settings
+" ==========================================================
+syntax on
+syntax enable
+
+"Colors
+set background=light
+colorscheme Tomorrow-Night "desert
 
 " fakeclip settings
 let g:fakeclip_terminal_multiplexer_type = 'tmux'
@@ -85,13 +99,12 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 
 let mapleader =","
 
-"Colors
-set background=dark
-colorscheme Tomorrow-Night "desert
-
 " Pretify JSON
 map <leader>jt <Esc>:%!json_xs -f json -t json-pretty<CR>
 au BufRead,BufNewFile *.json set filetype=json
+
+" zoom in/out of vim window
+map <Leader>z <C-w>o
 
 " Index ctags from any project, including those outside Rails
 map <Leader>ct :!ctags -R .<CR>
@@ -194,7 +207,7 @@ set modelines=0    "Turn modelines off in files; turn on if needed.
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
-set noexpandtab
+set expandtab
 
 "From http://stevelosh.com/blog/2010/09/coming-home-to-vim/#why-i-came-back-to-vimset scrolloff=3
 set encoding=utf-8
@@ -317,7 +330,7 @@ nnoremap <leader>a :Ack
 " Map 'ft' to 'fold tag' function
 nnoremap <leader>ft Vatzf
 
-" Smort CSS with <leader>S
+" Smart CSS with <leader>S
 "nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
 
 " re-hardwrap paragraphs of text (like TextMate)

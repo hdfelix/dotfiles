@@ -1,15 +1,24 @@
 export CLICOLOR=1
 export LSCOLORS=Exfxcxdxbxegedabagacad
+#export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx #another option on colors
+
 ###################
 # Default Editor
 ###################
 
 export EDITOR='vim'
 
+# Run mvim in terminal mode instead of regular vim
+alias vi='mvim -v'
+alias vim='mvim -v'
+
+
 ###################
 # Aliases
 ###################
 
+alias tat='tat.sh'
+alias tl='tmux list-sessions'
 alias ll='ls -lahG'
 # alias rr='clear && bundle exec rspec'
 alias rr='clear && bundle exec bin/rspec -fp --fail-fast spec' 
@@ -19,22 +28,6 @@ alias ra='clear && bundle exec bin/rspec spec -fp --fail-fast'
 
 #tell grep to highlight matches
 export GREP_OPTIONS='--color=auto'
-
-
-# MacPorts Installer addition on 2013-10-08_at_17:28:25: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# Finished adapting your PATH environment variable for use with MacPorts.
-
-export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
-
-# Added for MAMP mysql
-export PATH=$PATH:/Applications/MAMP/Library/bin
-
-export EDITOR='vim'
-
-# Run mvim in terminal mode instead of regular vim
-alias vi='mvim -v'
-alias vim='mvim -v'
 
 # @gf3’s Sexy Bash Prompt, inspired by “Extravagant Zsh Prompt”
 # Shamelessly copied from https://github.com/gf3/dotfiles
@@ -74,7 +67,6 @@ else
 	RESET="\033[m"
 fi
 
-
 function git_info() {
 # check if we're in a git repo
 git rev-parse --is-inside-work-tree &>/dev/null || return
@@ -104,22 +96,27 @@ if [ $USER != "$default_username" ]; then echo "${MAGENTA}$USER ${WHITE}at ${ORA
 # in the iterm tab
 # \[\e]1;\]$(basename $(dirname $PWD))/\W\[\a\]
 
-# PS1="\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]${BOLD}\$(usernamehost)\[$GREEN\]\w\$(git_info)\[$WHITE\]\n\$ \[$RESET\]"
-PS1="\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]${BOLD}\[$BLUE\]\w\$(git_info)\[$WHITE\]\n\$ \[$RESET\]"
+PS1="\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]${BOLD}\$(usernamehost)\[$GREEN\]\w\$(git_info)\[$WHITE\]\n\$ \[$RESET\]"
+# PS1="\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]${BOLD}\[$BLUE\]\w\$(git_info)\[$WHITE\]\n\$ \[$RESET\]"
 
 
 
 ###################
-# PATH
+# Path
 ###################
 
-export PATH="/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:usr:$PATH"
+# MacPorts
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+
+export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 
 # Added for MAMP mysql
 export PATH=$PATH:/Applications/MAMP/Library/bin
 
 # Postgres
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.3/bin
+
+export PATH="/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:usr:$PATH"
 
 # Nethack
 export PATH=$PATH:/usr/games/bin
