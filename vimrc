@@ -61,6 +61,8 @@ Plugin 'honza/vim-snippets'
 
 call vundle#end()
 filetype plugin indent on		" required!
+syntax on
+syntax enable
 
 " Brief help
 " :PluginList          - list configured bundles
@@ -86,6 +88,7 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 let mapleader =","
 
 "Colors
+" set t_Co=256
 set background=dark
 colorscheme desert
 
