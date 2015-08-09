@@ -96,6 +96,9 @@ colorscheme desert
 map <leader>jt <Esc>:%!json_xs -f json -t json-pretty<CR>
 au BufRead,BufNewFile *.json set filetype=json
 
+" zoom in/out of vim window
+map <Leader>z <C-w>o
+
 " Index ctags from any project, including those outside Rails
 map <Leader>ct :!ctags -R .<CR>
 
