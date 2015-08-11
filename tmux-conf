@@ -27,8 +27,7 @@ set -g base-index 1
 
 
 # use current path when creating new window
-bind c new-window -c '#{pane_current_path}'
-# bind c new-window -c "#PWD"
+bind c new-window -c "#PWD"
 bind S command-prompt -p ssh: "new-window -n %1 'ssh %1'"
 
 # Set the default terminal mode to 256color mode
@@ -53,8 +52,8 @@ setw -g window-status-attr dim
 setw -g pane-base-index 1
 
 # splitting panes (with current path)
-bind \ split-window -h -c '#{pane_current_path}'
-bind - split-window -v -c '#{pane_current_path}'
+bind-key - split-window -v -c "$PWD"
+bind-key \ split-window -h -c "$PWD"
 
 # Nice vi pane movement with prefix + hjkl
 bind -n C-h select-pane -L
