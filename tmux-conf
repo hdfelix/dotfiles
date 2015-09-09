@@ -8,7 +8,7 @@ set -g prefix C-y
 set -s escape-time 1
 
 # Reload tmux conf with Prefix r
-bind r source-file ~/.tmux.conf \; # display-message ".tmux.conf reloaded!"
+bind r source-file ~/.tmux.conf \ # ; display-message ".tmux.conf reloaded!"
 
 ### SESSIONS
 bind-key C-j choose-tree

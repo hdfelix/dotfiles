@@ -83,8 +83,7 @@ syntax on
 syntax enable
 
 "Colors
-"set background=light
-colorscheme Tomorrow-Night
+colorscheme Tomorrow-Night "desert
 
 let mapleader =","
 
@@ -203,6 +202,10 @@ map <Leader>g :call RunAllSpecs()<CR>
 "let g:rspec_runner = "os_x_iterm"
 
 set noswapfile " remove swap file feature
+
+" Colors
+set background=dark
+colorscheme Tomorrow-Night
 
 set history=500
 
