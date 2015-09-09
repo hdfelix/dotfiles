@@ -1,0 +1,76 @@
+# Set up mail box in your in home folder
+set mbox_type=maildir
+set mbox='~/mail/inbox'
+set spoolfile='~/mail/inbox'
+set folder='~/mail'
+set record='~/mail/sent'
+set postponed='mail/postponed'
+
+#Gmail account info
+set from = 'hector.felix@bfa.org'
+set realname = 'Hector D. Felix'
+set imap_user = 'hector.felix@bfa.org'
+set imap_pass = 'hdf13wiiD'
+
+# Editor
+set editor='vim + -c "set textwidth=72" -c "set wrap" -c "set nocp" -c "?^$"'
+
+# Remote folders
+set folder = 'imaps://imap.gmail.com:993'
+set spoolfile = "+INBOX"
+set postponed = "+[GMAIL]/Drafts"
+
+# Local folders
+set header_cache = ~/.mutt/cache/headers
+set message_cachedir = ~/.mutt/cache/bodies
+set certificate_file = ~/.mutt/certificates
+
+# SMTP Setup
+set smtp_url = 'smtp://hector.felix@bfa.org:587'
+set smtp_pass = 'hdf13wiiD'
+
+# Special keybindings
+# bind editor <space> noop 
+macro index gi "<change_folder>=INBOX<enter>" "Go to inbox"
+macro index ga "<change_folder>[GMAIL]/All Mail<enter>" "Go to all mail"
+macro index gs "<change_folder>[GMAIL]/Sent Mail<enter>" "Go to Sent mail"
+macro index gd "<change_folder>[GMAIL]/Drafts<enter>" "Go to Drafts"
+
+# Mutt session security
+set move  = no #Stop asking to "move read messages to mbox"!
+set imap_keepalive = 900
+
+# configurations
+set sort = threads
+set sort_aux = last-date-received
+
+folder-hook . set sort=threads
+folder-hook spam set sort=subject
+
+# Colors
+# color hdrdefault cyan default
+# color attachment yellow default
+# color header brightyellow default "From: "
+# color header brightyellow default "Subject: "
+# color header brightyellow default "Date: "
+# color quoted green default
+# color quoted1 cyan default
+# color quoted2 green default
+# color quoted3 cyan default
+# color error red default             # error messages
+# color message white default         # informational messages
+# color indicator white red           # indicator for 'current message'
+# color status white blue             # status lines in the folder index sed for mini-help line
+# color tree red  default             # the 'tree' display of threads within the folder index
+# color search white blue             # search matches found with search within the folder index
+# color markers red default           # the markers indicate a wrapped line
+# color index yellow default '~O'
+# color index yellow default '~N'
+# color index brightred default '~F'  # Flagged messages are important!
+# color index blue default '~D'       # deleted emails - use dark color (already 'dealt with')
+# 
+# # identifies email addresses
+# color body brightred black i[\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+  
+# 
+# # identifies URLs
+# color body brightblue black (https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+ 
