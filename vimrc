@@ -76,14 +76,17 @@ call vundle#end()						" required
 filetype plugin indent on		" required
 
 " ==========================================================
-" Ruby settings
+" General settings
 " ==========================================================
+
 syntax on
 syntax enable
 
 "Colors
-set background=light
+"set background=light
 colorscheme Tomorrow-Night
+
+let mapleader =","
 
 " fakeclip settings
 let g:fakeclip_terminal_multiplexer_type = 'tmux'
@@ -91,13 +94,17 @@ let g:fakeclip_terminal_multiplexer_type = 'tmux'
 " ctrl_p ignore folders
 let g:ctrlp_custom_ignore =  'tags\|bin\|tmp\|log\:coverage'
 
-" rubocop settings
-"let vimrubocop_config='config/rubocop/rubocop.yml'
-
 "using ag (the silver searcher) with ack.vim
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
-let mapleader =","
+" rubocop settings
+" let vimrubocop_config='config/rubocop/rubocop.yml'
+let g:vimrubocop_keymap = 0
+nmap <Leader>r :RuboCop<CR>
+
+" Easily convert file types to Unix
+noremap <Leader>u :update<CR> :e ++ff=dos<CR> :setlocal<CR> ff=unix
+
 
 " Pretify JSON
 map <leader>jt <Esc>:%!json_xs -f json -t json-pretty<CR>
@@ -114,6 +121,9 @@ map <Leader>b :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<
 
 " Open edit command at current directory
 map <Leader>e :e <C-R>=expand("%:p:h") . '/'<CR>
+
+" Strip all trailing whitespaces in the current file
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/='<CR>
 
 " Fix indents on entire file
 map <Leader>ii mmgg=G`m<CR>
@@ -283,7 +293,7 @@ nnoremap <tab> %
 "set wrap
 "set textwidth=79
 "set formatoptions=qrn1
-"set colorcolumn=85
+set colorcolumn=85
 
 "TextMate-style invisible characters
 "set list
@@ -314,9 +324,6 @@ ino <up> <Nop>
 "Shortcut to rapidly toggle 'set list'
 nmap <leader>l :set list!<CR>
 
-"Strip all trailing whitespaces in the current file
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/='<CR>
-
 "Use <leader>w to open a new vertical split and switch to it
 nnoremap <leader>w <C-w>v<C-w>l
 
@@ -337,7 +344,6 @@ nnoremap <leader>v V`]
 
 " Use <leader>ev to open up .vimrc in a vertical split for modifying on the fly
  nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
-
 
 " Vim Splits mappings
 nnoremap <C-J> <C-W><C-J>
