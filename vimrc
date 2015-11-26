@@ -1,8 +1,11 @@
+set t_Co=256
+
+runtime macros/matchit.vim
 " ==========================================================
 " Vundle settings
 " ==========================================================
 set nocompatible				" be iMproved
-filetype off
+  filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#begin()
@@ -10,6 +13,7 @@ call vundle#begin()
 " let Vundle manage Vundle								" required
 Plugin 'gmarik/Vundle.vim'
 
+" Plugin 'Floobits/floobits-vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-endwise'
@@ -46,6 +50,7 @@ Plugin 'nelstrom/vim-markdown-folding'
 Plugin 'JSON.vim'
 Plugin 'ruby-matchit'
 Plugin 'matchit.zip'
+Plugin 'jsx'
 " Plugin 'textobj-rubyblock'
 " Plugin 'godlygeek/tabular'
 "
@@ -83,9 +88,12 @@ syntax on
 syntax enable
 
 "Colors
-colorscheme Tomorrow-Night "desert
+colorscheme desert
 
 let mapleader =","
+
+" ReactJS
+let g:jsx_ext_required = 0 "Allow JSX in normal JS files
 
 " fakeclip settings
 let g:fakeclip_terminal_multiplexer_type = 'tmux'
@@ -104,6 +112,8 @@ nmap <Leader>r :RuboCop<CR>
 " Easily convert file types to Unix
 noremap <Leader>u :update<CR> :e ++ff=dos<CR> :setlocal<CR> ff=unix
 
+" Settings for git commits
+autocmd Filetype gitcommit setlocal spell textwidth=72
 
 " Pretify JSON
 map <leader>jt <Esc>:%!json_xs -f json -t json-pretty<CR>
@@ -160,7 +170,7 @@ nnoremap <leader>rs :VtrSendCommandToRunner rake<cr>
 
 nmap <leader>osr :VtrOpenRunner {'orientation': 'h', 'percentage': 50}<cr>
 
-nnoremap <leader>sd :VtrSendCTRLD<cr>
+nnoremap <leader>cd :VtrSendCTRLD<cr>
 nnoremap <leader>q :VtrSendCommandToRunner <cr>
 nnoremap <leader>sf :w<cr>:call SendFileViaVtr()<cr>
 nnoremap <leader>sl :VtrSendCommandToRunner <cr>
@@ -187,10 +197,11 @@ endfunction
 
 " vim-rspec config
 " zsh version
-let g:rspec_command = "VtrSendCommandToRunner! bin/rspec -fp -t ~skip {spec}"
+" let g:rspec_command = "VtrSendCommandToRunner! clear; bin/rspec -fp -t spec {spec}"
 
 " bash version
 " let g:rspec_command = \"VtrSendCommandToRunner! bin/rspec -fp -t ~skip {spec}"
+let g:rspec_command = "VtrSendCommandToRunner! clear; bundle exec rspec --fail-fast -fp {spec}"
 
 " vim-rspec mappings
 map <Leader>t :call RunCurrentSpecFile()<CR>
@@ -238,6 +249,7 @@ set laststatus=2
 set number						"set current line number on ruler
 set relativenumber				"Set relative numbers on ruler
 set undofile					"Create undo file for undoing even after closing file
+set undodir= "~\\.vimundo"
 
 
 set autowrite		    "Save buffers when I switch out of them?
@@ -357,4 +369,3 @@ nnoremap <C-H> <C-W><C-H>
 " Vim Split - More natural split openings
 set splitbelow
 set splitright
-
