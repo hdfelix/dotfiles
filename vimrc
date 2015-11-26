@@ -201,7 +201,7 @@ endfunction
 
 " bash version
 " let g:rspec_command = \"VtrSendCommandToRunner! bin/rspec -fp -t ~skip {spec}"
-let g:rspec_command = "VtrSendCommandToRunner! clear; bundle exec rspec --fail-fast -fp {spec}"
+let g:rspec_command = "VtrSendCommandToRunner! clear; bundle exec spring rspec --fail-fast -fp {spec}"
 
 " vim-rspec mappings
 map <Leader>t :call RunCurrentSpecFile()<CR>
