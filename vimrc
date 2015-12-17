@@ -1,11 +1,10 @@
 set t_Co=256
 
-runtime macros/matchit.vim
 " ==========================================================
 " Vundle settings
 " ==========================================================
 set nocompatible				" be iMproved
-  filetype off
+filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#begin()
@@ -13,7 +12,6 @@ call vundle#begin()
 " let Vundle manage Vundle								" required
 Plugin 'gmarik/Vundle.vim'
 
-" Plugin 'Floobits/floobits-vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-endwise'
@@ -28,7 +26,8 @@ Plugin 'thoughtbot/vim-rspec'
 Plugin 'tpope/vim-dispatch'
 Plugin 'benmills/vimux'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'christoomey/vim-tmux-runner'
+"Plugin 'christoomey/vim-tmux-runner'
+Plugin 'pdbradley/vim-tmux-runner'
 Plugin 'mattn/emmet-vim'
 Plugin 'AutoTag'
 
@@ -50,10 +49,6 @@ Plugin 'nelstrom/vim-markdown-folding'
 Plugin 'JSON.vim'
 Plugin 'ruby-matchit'
 Plugin 'matchit.zip'
-" Plugin 'pangloss/vim-javascript'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'mxw/vim-jsx'
-Plugin 'helino/vim-json'
 " Plugin 'textobj-rubyblock'
 " Plugin 'godlygeek/tabular'
 "
@@ -86,17 +81,14 @@ filetype plugin indent on		" required
 " ==========================================================
 " General settings
 " ==========================================================
-
 syntax on
 syntax enable
 
 "Colors
-colorscheme desert
+set background=dark
+colorscheme Tomorrow-Night
 
 let mapleader =","
-
-" ReactJS
-let g:jsx_ext_required = 0 "Allow JSX in normal JS files
 
 " fakeclip settings
 let g:fakeclip_terminal_multiplexer_type = 'tmux'
@@ -104,19 +96,14 @@ let g:fakeclip_terminal_multiplexer_type = 'tmux'
 " ctrl_p ignore folders
 let g:ctrlp_custom_ignore =  'tags\|bin\|tmp\|log\:coverage'
 
+" rubocop settings
+let g:vimrubocop_keymap = 0
+
 "using ag (the silver searcher) with ack.vim
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
-" rubocop settings
-" let vimrubocop_config='config/rubocop/rubocop.yml'
-let g:vimrubocop_keymap = 0
-nmap <Leader>r :RuboCop<CR>
-
-" Easily convert file types to Unix
-noremap <Leader>u :update<CR> :e ++ff=dos<CR> :setlocal<CR> ff=unix
-
-" Settings for git commits
-autocmd Filetype gitcommit setlocal spell textwidth=72
+" Easily convert files to Unix format
+noremap <leader>u :update<CR> :e ++ff=dos<CR> :setlocal<CR> ff=unix
 
 " Pretify JSON
 map <leader>jt <Esc>:%!json_xs -f json -t json-pretty<CR>
@@ -128,14 +115,16 @@ map <Leader>z <C-w>o
 " Index ctags from any project, including those outside Rails
 map <Leader>ct :!ctags -R .<CR>
 
-" Git blame
+" Git 
+
+" Commits
+autocmd Filetype gitcommit setlocal spell textwidth=72
+
+" blame
 map <Leader>b :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 
 " Open edit command at current directory
 map <Leader>e :e <C-R>=expand("%:p:h") . '/'<CR>
-
-" Strip all trailing whitespaces in the current file
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/='<CR>
 
 " Fix indents on entire file
 map <Leader>ii mmgg=G`m<CR>
@@ -159,6 +148,9 @@ let g:VtrClearBeforeSend = 0
 let g:VtrUseVtrMaps = 1
 let g:VtrGitCdUpOnOpen = 0
 let g:VtrPercentage = 30
+let g:VtrOrientation = 'h'
+let g:VtfClearOnReatach = 0
+
 
 nnoremap <leader>sd :VtrSendCommand<cr>
 nnoremap <Leader>fr :VtrFocusRunner<cr>
@@ -172,20 +164,22 @@ nnoremap <leader>rj :VtrSendCommandToRunner be rake konacha<cr>
 nnoremap <leader>rs :VtrSendCommandToRunner rake<cr>
 
 nmap <leader>osr :VtrOpenRunner {'orientation': 'h', 'percentage': 50}<cr>
+map <leader>x :VtrSendFile<cr>
 
-nnoremap <leader>cd :VtrSendCTRLD<cr>
+nnoremap <leader>sd :VtrSendCTRLD<cr>
 nnoremap <leader>q :VtrSendCommandToRunner <cr>
 nnoremap <leader>sf :w<cr>:call SendFileViaVtr()<cr>
 nnoremap <leader>sl :VtrSendCommandToRunner <cr>
 
 function! SendFileViaVtr()
-  let runners = {
+ let runners = {
     \ 'haskell': 'ghci',
     \ 'ruby': 'ruby',
     \ 'javascript': 'node',
     \ 'python': 'python',
     \ 'sh': 'sh'
     \ }
+
   if has_key(runners, &filetype)
     let runner = runners[&filetype]
     let local_file_path = expand('%')
@@ -200,11 +194,10 @@ endfunction
 
 " vim-rspec config
 " zsh version
-" let g:rspec_command = "VtrSendCommandToRunner! clear; bin/rspec -fp -t spec {spec}"
+let g:rspec_command = "VtrSendCommandToRunner! bin/rspec -fp -t ~skip {spec}"
 
 " bash version
 " let g:rspec_command = \"VtrSendCommandToRunner! bin/rspec -fp -t ~skip {spec}"
-let g:rspec_command = "VtrSendCommandToRunner! clear; bundle exec spring rspec --fail-fast -fp {spec}"
 
 " vim-rspec mappings
 map <Leader>t :call RunCurrentSpecFile()<CR>
@@ -252,7 +245,6 @@ set laststatus=2
 set number						"set current line number on ruler
 set relativenumber				"Set relative numbers on ruler
 set undofile					"Create undo file for undoing even after closing file
-set undodir= "~\\.vimundo"
 
 
 set autowrite		    "Save buffers when I switch out of them?
@@ -311,7 +303,7 @@ nnoremap <tab> %
 "set wrap
 "set textwidth=79
 "set formatoptions=qrn1
-set colorcolumn=85
+"set colorcolumn=85
 
 "TextMate-style invisible characters
 "set list
@@ -342,6 +334,9 @@ ino <up> <Nop>
 "Shortcut to rapidly toggle 'set list'
 nmap <leader>l :set list!<CR>
 
+"Strip all trailing whitespaces in the current file
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/='<CR>
+
 "Use <leader>w to open a new vertical split and switch to it
 nnoremap <leader>w <C-w>v<C-w>l
 
@@ -362,6 +357,7 @@ nnoremap <leader>v V`]
 
 " Use <leader>ev to open up .vimrc in a vertical split for modifying on the fly
  nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+
 
 " Vim Splits mappings
 nnoremap <C-J> <C-W><C-J>
