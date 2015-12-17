@@ -1,3 +1,5 @@
+set t_Co=256
+
 " ==========================================================
 " Vundle settings
 " ==========================================================
@@ -77,14 +79,16 @@ call vundle#end()						" required
 filetype plugin indent on		" required
 
 " ==========================================================
-" Ruby settings
+" General settings
 " ==========================================================
 syntax on
 syntax enable
 
 "Colors
-set background=light
-colorscheme desert
+set background=dark
+colorscheme Tomorrow-Night
+
+let mapleader =","
 
 " fakeclip settings
 let g:fakeclip_terminal_multiplexer_type = 'tmux'
@@ -93,12 +97,13 @@ let g:fakeclip_terminal_multiplexer_type = 'tmux'
 let g:ctrlp_custom_ignore =  'tags\|bin\|tmp\|log\:coverage'
 
 " rubocop settings
-"let vimrubocop_config='config/rubocop/rubocop.yml'
+let g:vimrubocop_keymap = 0
 
 "using ag (the silver searcher) with ack.vim
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
-let mapleader =","
+" Easily convert files to Unix format
+noremap <leader>u :update<CR> :e ++ff=dos<CR> :setlocal<CR> ff=unix
 
 " Pretify JSON
 map <leader>jt <Esc>:%!json_xs -f json -t json-pretty<CR>
@@ -110,7 +115,12 @@ map <Leader>z <C-w>o
 " Index ctags from any project, including those outside Rails
 map <Leader>ct :!ctags -R .<CR>
 
-" Git blame
+" Git 
+
+" Commits
+autocmd Filetype gitcommit setlocal spell textwidth=72
+
+" blame
 map <Leader>b :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 
 " Open edit command at current directory
@@ -139,7 +149,7 @@ let g:VtrUseVtrMaps = 1
 let g:VtrGitCdUpOnOpen = 0
 let g:VtrPercentage = 30
 let g:VtrOrientation = 'h'
-let g:VtrClearOnreatach = 0
+let g:VtfClearOnReatach = 0
 
 
 nnoremap <leader>sd :VtrSendCommand<cr>
@@ -149,12 +159,12 @@ nnoremap <leader>va :VtrAttachToPane<cr>
 nmap <leader>fs :VtrFlushCommand<cr>:VtrSendCommandToRunner<cr>
 nmap <C-f> :VtrSendLineToRunner<cr>
 vmap <C-f> <Esc>:VtrSendSelectedToRunner<cr>
-map <leader>x :VtrSendFile<cr>
 
 nnoremap <leader>rj :VtrSendCommandToRunner be rake konacha<cr>
 nnoremap <leader>rs :VtrSendCommandToRunner rake<cr>
 
 nmap <leader>osr :VtrOpenRunner {'orientation': 'h', 'percentage': 50}<cr>
+map <leader>x :VtrSendFile<cr>
 
 nnoremap <leader>sd :VtrSendCTRLD<cr>
 nnoremap <leader>q :VtrSendCommandToRunner <cr>
@@ -162,13 +172,14 @@ nnoremap <leader>sf :w<cr>:call SendFileViaVtr()<cr>
 nnoremap <leader>sl :VtrSendCommandToRunner <cr>
 
 function! SendFileViaVtr()
-  let runners = {
+ let runners = {
     \ 'haskell': 'ghci',
     \ 'ruby': 'ruby',
     \ 'javascript': 'node',
     \ 'python': 'python',
     \ 'sh': 'sh'
     \ }
+
   if has_key(runners, &filetype)
     let runner = runners[&filetype]
     let local_file_path = expand('%')
