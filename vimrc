@@ -24,7 +24,8 @@ Plugin 'thoughtbot/vim-rspec'
 Plugin 'tpope/vim-dispatch'
 Plugin 'benmills/vimux'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'christoomey/vim-tmux-runner'
+"Plugin 'christoomey/vim-tmux-runner'
+Plugin 'pdbradley/vim-tmux-runner'
 Plugin 'mattn/emmet-vim'
 Plugin 'AutoTag'
 
@@ -83,7 +84,7 @@ syntax enable
 
 "Colors
 set background=light
-colorscheme Tomorrow-Night "desert
+colorscheme desert
 
 " fakeclip settings
 let g:fakeclip_terminal_multiplexer_type = 'tmux'
@@ -137,6 +138,9 @@ let g:VtrClearBeforeSend = 0
 let g:VtrUseVtrMaps = 1
 let g:VtrGitCdUpOnOpen = 0
 let g:VtrPercentage = 30
+let g:VtrOrientation = 'h'
+let g:VtrClearOnreatach = 0
+
 
 nnoremap <leader>sd :VtrSendCommand<cr>
 nnoremap <Leader>fr :VtrFocusRunner<cr>
@@ -145,6 +149,7 @@ nnoremap <leader>va :VtrAttachToPane<cr>
 nmap <leader>fs :VtrFlushCommand<cr>:VtrSendCommandToRunner<cr>
 nmap <C-f> :VtrSendLineToRunner<cr>
 vmap <C-f> <Esc>:VtrSendSelectedToRunner<cr>
+map <leader>x :VtrSendFile<cr>
 
 nnoremap <leader>rj :VtrSendCommandToRunner be rake konacha<cr>
 nnoremap <leader>rs :VtrSendCommandToRunner rake<cr>
