@@ -21,11 +21,28 @@ alias tat='tat.sh'
 alias tl='tmux list-sessions'
 alias ll='ls -lahG'
 # alias rr='clear && bundle exec rspec'
-alias rr='clear && bundle exec bin/rspec -fp --fail-fast spec' 
+alias rr='clear && bundle exec spring rspec -fp --fail-fast spec'
 # alias rr='clear && rspec -fp --fail-fast spec'
 alias ra='clear && bundle exec bin/rspec spec -fp --fail-fast'
+alias gd='git diff --color-words'
 # alias pt='clear && parallel_rspec -fp --fail-fast spec'
 
+###################
+# EC2 CLI
+###################
+# home
+export EC2_HOME=/usr/local/ec2/ec2-api-tools-1.7.0.0
+# path
+export PATH=$PATH:$EC2_HOME/bin
+
+###################
+# JAVA
+###################
+export JAVA_HOME=$(/usr/libexec/java_home)
+
+###################
+# Colors
+###################
 #tell grep to highlight matches
 export GREP_OPTIONS='--color=auto'
 
@@ -130,6 +147,10 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 #HDF added for my own scripts
 export PATH="$HOME/bin:$PATH"
 
-if [ -f ~/.bashrc ]; then 
-  source ~/.bashrc 
+if [ -f ~/.git-completion.bash ]; then
+  source ~/.git-completion.bash
+fi
+
+if [ -f ~/.bashrc ]; then
+  source ~/.bashrc
 fi
