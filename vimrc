@@ -21,6 +21,14 @@ Plugin 'tpope/vim-haml'
 Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-rails'
 Plugin 'int3/vim-extradite'
+Plugin 'Lucius'
+
+" refactoring in vim
+" Plugin 'LucHermitte/lh-vim-lib'
+" Plugin 'LucHermitte/lh-tags'
+" Plugin 'LucHermitte/lh-dev'
+" Plugin 'LucHermitte/lh-brackets'
+" Plugin 'LucHermitte/vim-refactor'
 
 Plugin 'thoughtbot/vim-rspec'
 Plugin 'tpope/vim-dispatch'
@@ -29,6 +37,7 @@ Plugin 'christoomey/vim-tmux-navigator'
 "Plugin 'christoomey/vim-tmux-runner'
 Plugin 'pdbradley/vim-tmux-runner'
 Plugin 'mattn/emmet-vim'
+Plugin 'WebAPI.vim'
 Plugin 'AutoTag'
 
 Plugin 'Lokaltog/vim-easymotion'
@@ -49,9 +58,13 @@ Plugin 'nelstrom/vim-markdown-folding'
 Plugin 'JSON.vim'
 Plugin 'ruby-matchit'
 Plugin 'matchit.zip'
+
+" JS, React
+Plugin 'mxw/vim-jsx'
+Plugin 'pangloss/vim-javascript'
 " Plugin 'textobj-rubyblock'
 " Plugin 'godlygeek/tabular'
-"
+
 " vim-scripts repos
 " Plugin 'L9'
 " Plugin 'FuzzyFinder'
@@ -86,7 +99,7 @@ syntax enable
 
 "Colors
 set background=dark
-colorscheme Tomorrow-Night
+colorscheme lucius " 3DGlasses, Tomorrow-Night
 
 let mapleader =","
 
@@ -98,9 +111,19 @@ let g:ctrlp_custom_ignore =  'tags\|bin\|tmp\|log\:coverage'
 
 " rubocop settings
 let g:vimrubocop_keymap = 0
+let g:vimrubocop_config = 'config/rubocop.yml'
+
+nmap <Leader>r :RuboCop<CR> 
+
+" use Ack instead of grep
+"set grepprg=ack "\ -k
+
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 "using ag (the silver searcher) with ack.vim
-let g:ackprg = 'ag --nogroup --nocolor --column'
+" let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " Easily convert files to Unix format
 noremap <leader>u :update<CR> :e ++ff=dos<CR> :setlocal<CR> ff=unix
@@ -109,13 +132,24 @@ noremap <leader>u :update<CR> :e ++ff=dos<CR> :setlocal<CR> ff=unix
 map <leader>jt <Esc>:%!json_xs -f json -t json-pretty<CR>
 au BufRead,BufNewFile *.json set filetype=json
 
+" ESLINT
+let g:syntastic_javascript_checkers = ['eslint']
+
+" Allow JSX in normal JS files
+let g:jsx_ext_required = 0
+
+" Emmet custom snippets
+let g:user_emmet_settings = webapi#json#decode(join(readfile(expand('~/.snippets_custom.json')), "\n"))
+
 " zoom in/out of vim window
 map <Leader>z <C-w>o
 
 " Index ctags from any project, including those outside Rails
 map <Leader>ct :!ctags -R .<CR>
 
+""""""""""""""""""""""
 " Git 
+""""""""""""""""""""""
 
 " Commits
 autocmd Filetype gitcommit setlocal spell textwidth=72
@@ -147,12 +181,11 @@ map <leader>h :call TimeLapse() <cr>
 let g:VtrClearBeforeSend = 0
 let g:VtrUseVtrMaps = 1
 let g:VtrGitCdUpOnOpen = 0
-let g:VtrPercentage = 30
+let g:VtrPercentage = 50
 let g:VtrOrientation = 'h'
 let g:VtfClearOnReatach = 0
 
-
-nnoremap <leader>sd :VtrSendCommand<cr>
+" nnoremap <leader>sd :VtrSendCommand<cr>
 nnoremap <Leader>fr :VtrFocusRunner<cr>
 nnoremap <leader>va :VtrAttachToPane<cr>
 
@@ -194,7 +227,9 @@ endfunction
 
 " vim-rspec config
 " zsh version
-let g:rspec_command = "VtrSendCommandToRunner! bin/rspec -fp -t ~skip {spec}"
+let g:rspec_command = "VtrSendCommandToRunner! bundle exec bin/rspec -fp -t ~skip {spec}"
+" let g:rspec_command = \"VtrSendCommandToRunner! bundle exec rspec -fp -t ~skip {spec}"
+" let g:rspec_command = 'call VimuxRunCommand("bundle exec rspec {spec}\n")'
 
 " bash version
 " let g:rspec_command = \"VtrSendCommandToRunner! bin/rspec -fp -t ~skip {spec}"
@@ -210,14 +245,16 @@ map <Leader>g :call RunAllSpecs()<CR>
 
 set noswapfile " remove swap file feature
 
-" Colors
-set background=dark
-colorscheme Tomorrow-Night
-
 set history=500
 
 set nocompatible   " Turn off compatibility with VI.
 set modelines=0    "Turn modelines off in files; turn on if needed.
+
+" Windows - give new window largest "focus"
+set winwidth=84
+set winheight=5
+set winminheight=5
+set winheight=999
 
 "Set tab stops
 set tabstop=2
@@ -232,6 +269,7 @@ set autoindent
 set showmode
 set hidden
 set wildmenu
+set wildignore+=*/.git/*,*/tmp/*
 set wildmode=list:longest
 "set visualbell
 set cursorline							"Add cursor line
@@ -246,6 +284,18 @@ set number						"set current line number on ruler
 set relativenumber				"Set relative numbers on ruler
 set undofile					"Create undo file for undoing even after closing file
 
+" Switch between number and relativenumber
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set number
+    set norelativenumber
+  else
+    set number
+    set relativenumber
+  endif
+endfunction
+
+nnoremap <C-n> :call NumberToggle()<cr>
 
 set autowrite		    "Save buffers when I switch out of them?
 
@@ -332,7 +382,7 @@ ino <up> <Nop>
 
 "##### Leader key mappings
 "Shortcut to rapidly toggle 'set list'
-nmap <leader>l :set list!<CR>
+nmap <leader>li :set list!<CR>
 
 "Strip all trailing whitespaces in the current file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/='<CR>
@@ -341,7 +391,7 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/='<CR>
 nnoremap <leader>w <C-w>v<C-w>l
 
 " Ack
-nnoremap <leader>a :Ack
+nnoremap <leader>a :Ack 
 
 " Map 'ft' to 'fold tag' function
 nnoremap <leader>ft Vatzf
