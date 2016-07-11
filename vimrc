@@ -181,7 +181,7 @@ map <leader>h :call TimeLapse() <cr>
 let g:VtrClearBeforeSend = 0
 let g:VtrUseVtrMaps = 1
 let g:VtrGitCdUpOnOpen = 0
-let g:VtrPercentage = 50
+let g:VtrPercentage = 30
 let g:VtrOrientation = 'h'
 let g:VtfClearOnReatach = 0
 
