@@ -13,7 +13,7 @@
 --ignore-dir=.git
 --ignore-dir=.bundle
 
---ignore-files=is:tags
+--ignore-file=is:tags
 
 --smart-case
 --sort-files
