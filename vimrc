@@ -6,6 +6,9 @@ set t_Co=256
 set nocompatible				" be iMproved
 filetype off
 
+" Using only for Vim indent guidelines (not available via vundle)
+execute pathogen#infect()
+
 set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#begin()
 
@@ -21,6 +24,7 @@ Plugin 'tpope/vim-haml'
 Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-rails'
 Plugin 'int3/vim-extradite'
+Plugin 'vim-indent-guides'
 Plugin 'Lucius'
 
 " refactoring in vim
@@ -37,7 +41,7 @@ Plugin 'christoomey/vim-tmux-navigator'
 "Plugin 'christoomey/vim-tmux-runner'
 Plugin 'pdbradley/vim-tmux-runner'
 Plugin 'mattn/emmet-vim'
-Plugin 'WebAPI.vim'
+" Plugin 'WebAPI.vim'
 Plugin 'AutoTag'
 
 Plugin 'Lokaltog/vim-easymotion'
@@ -50,7 +54,7 @@ Plugin 'kana/vim-fakeclip'
 Plugin 'jgdavey/tslime.vim'
 " Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'kchmck/vim-coffee-script'
-Plugin 'vim-ruby/vim-ruby'
+" Plugin 'vim-ruby/vim-ruby'
 Plugin 'ngmy/vim-rubocop'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'rizzatti/dash.vim'
@@ -113,7 +117,11 @@ let g:ctrlp_custom_ignore =  'tags\|bin\|tmp\|log\:coverage'
 let g:vimrubocop_keymap = 0
 let g:vimrubocop_config = 'config/rubocop.yml'
 
-nmap <Leader>r :RuboCop<CR> 
+" vim indent guides
+let g:indent_guides_guide_size = 2
+
+
+nmap <Leader>r :RuboCop<CR>
 
 " use Ack instead of grep
 "set grepprg=ack "\ -k
@@ -139,7 +147,7 @@ let g:syntastic_javascript_checkers = ['eslint']
 let g:jsx_ext_required = 0
 
 " Emmet custom snippets
-let g:user_emmet_settings = webapi#json#decode(join(readfile(expand('~/.snippets_custom.json')), "\n"))
+" let g:user_emmet_settings = webapi#json#decode(join(readfile(expand('~/.snippets_custom.json')), "\n"))
 
 " zoom in/out of vim window
 map <Leader>z <C-w>o
@@ -148,7 +156,7 @@ map <Leader>z <C-w>o
 map <Leader>ct :!ctags -R .<CR>
 
 """"""""""""""""""""""
-" Git 
+" Git
 """"""""""""""""""""""
 
 " Commits
@@ -173,7 +181,7 @@ map <Leader>co :set nonu nornu<CR>,n<CR>
 map <Leader>nco :set nu rnu<CR>,n<CR>
 
 " Timelapse?
-map <leader>h :call TimeLapse() <cr> 
+map <leader>h :call TimeLapse() <cr>
 
 " tmux-runner
 
@@ -186,7 +194,7 @@ let g:VtrOrientation = 'h'
 let g:VtfClearOnReatach = 0
 
 " nnoremap <leader>sd :VtrSendCommand<cr>
-nnoremap <Leader>fr :VtrFocusRunner<cr>
+nnoremap <leader>fr :VtrFocusRunner<cr>
 nnoremap <leader>va :VtrAttachToPane<cr>
 
 nmap <leader>fs :VtrFlushCommand<cr>:VtrSendCommandToRunner<cr>
@@ -222,17 +230,18 @@ function! SendFileViaVtr()
   endif
 endfunction
 
-" let g:rspec_command = 'call Send_to_Tmux("bundle exec rspec {spec}\n")'
+let g:rspec_command = 'call Send_to_Tmux("bin/rspec {spec}\n")'
 " let g:rspec_command = 'call Send_to_Tmux("bin/rspec {spec}\n")'
 
 " vim-rspec config
 " zsh version
-let g:rspec_command = "VtrSendCommandToRunner! bundle exec bin/rspec -fp -t ~skip {spec}"
+" let g:rspec_command = \"VtrSendCommandToRunner! bundle exec bin/rspec -fp -t ~skip {spec}"
 " let g:rspec_command = \"VtrSendCommandToRunner! bundle exec rspec -fp -t ~skip {spec}"
 " let g:rspec_command = 'call VimuxRunCommand("bundle exec rspec {spec}\n")'
 
 " bash version
 " let g:rspec_command = \"VtrSendCommandToRunner! bin/rspec -fp -t ~skip {spec}"
+" let g:rspec_command = \"VtrSendCommandToRunner! rspec -fp -t ~skip {spec}"
 
 " vim-rspec mappings
 map <Leader>t :call RunCurrentSpecFile()<CR>
@@ -241,7 +250,7 @@ map <Leader>l :call RunLastSpec()<CR>
 map <Leader>g :call RunAllSpecs()<CR>
 
 " To run in last session of current iTerm terminal
-"let g:rspec_runner = "os_x_iterm"
+let g:rspec_runner = "os_x_iterm2"
 
 set noswapfile " remove swap file feature
 
@@ -391,7 +400,7 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/='<CR>
 nnoremap <leader>w <C-w>v<C-w>l
 
 " Ack
-nnoremap <leader>a :Ack 
+nnoremap <leader>a :Ack
 
 " Map 'ft' to 'fold tag' function
 nnoremap <leader>ft Vatzf
