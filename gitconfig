@@ -6,24 +6,23 @@
 	excludesfile = /Users/Hector/.gitignore_global
 	whitespace = trailing-space,space-before-tab
 	editor = /usr/bin/vim
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
 
 [color]
 	ui = auto
+
 [diff]
 	mnemonicprefix = true
 	tool = /usr/bin/vimdiff
+
 [branch]
 	autosetupmerge = true
+
 [push]
 	default = tracking
+
 [merge]
 	stat = true
+
 [alias]
 	wtf = !~/code/git-wtf/git-wtf
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
@@ -35,8 +34,10 @@
 	glog = log -E -i --grep
 	car = commit --amend --no-edit
 	uncommit = reset --soft HEAD^
+
 [credential]
 	helper = osxkeychain
+
 [grep]
 	extendRegexp = true
 	lineNumber = true
