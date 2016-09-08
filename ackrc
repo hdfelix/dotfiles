@@ -4,14 +4,17 @@
 --type-add=js=.js,.erb,.coffee
 --type-set=c=.c,.cpp,.ino,.pde,.h
 
---ignore-dir=tmp
---ignore-dir=public
---ignore-dir=log
---ignore-dir=tags
+--ignore-dir=bower_components
 --ignore-dir=coverage
---ignore-dir=.idea
---ignore-dir=.git
+--ignore-dir=log
+--ignore-dir=public
+--ignore-dir=tags
+--ignore-dir=tmp
+--ignore-dir=vendor
 --ignore-dir=.bundle
+--ignore-dir=.gems
+--ignore-dir=.git
+--ignore-dir=.idea
 
 --ignore-file=is:tags
 

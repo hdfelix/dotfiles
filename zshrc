@@ -56,7 +56,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git brew osx wd gem)
+plugins=(git bundler brew osx rake gem)
 
 # User configuration
 
@@ -90,7 +90,7 @@ source $ZSH/oh-my-zsh.sh
 alias tat=~/scripts/tat.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias rr='clear && bin/rspec -fp --fail-fast spec'
+alias rr='clear && bin/rspec -fp spec'
 # alias rr='clear && rspec -fp --fail-fast spec'
 alias ra='clear && bin/rspec spec -fp --fail-fast'
 alias gd='git diff --color-words'
