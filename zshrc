@@ -90,10 +90,12 @@ source $ZSH/oh-my-zsh.sh
 alias tat=~/scripts/tat.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias rr='clear && bin/rspec -fp spec'
+alias rr='clear && bin/rubocop -DES && bin/rspec -fp spec'
 # alias rr='clear && rspec -fp --fail-fast spec'
-alias ra='clear && bin/rspec spec -fp --fail-fast'
+# alias ra='clear && bin/rubocop -D && bin/rspec spec -fp --fail-fast'
+alias ra='clear && bin/rubocop -DES && bundle exec rake rspec:all -fp --fail-fast'
 alias gd='git diff --color-words'
-alias rn='clear && bin/rspec --next-failure'
+alias rn='clear && rspec --next-failure'
+alias rt='clear && rubocop -DES && bundle exec rake rspec:all'
 
 eval "$(rbenv init -)"
