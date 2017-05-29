@@ -1,6 +1,6 @@
 # splitting panes (without current path; tmate is still on tmux 1.8)
-bind \ split-window -h -c "$PROMPT_COMMAND"
-bind - split-window -v -c "$PROMPT_COMMAND"
+# bind \ split-window -h -c "$PROMPT_COMMAND"
+# bind - split-window -v -c "$PROMPT_COMMAND"
 
 bind -n C-h select-pane -L
 bind -n C-j select-pane -D
