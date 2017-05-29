@@ -21,11 +21,13 @@ Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-haml'
+Plugin 'slim-template/vim-slim.git'
 Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-rails'
 Plugin 'int3/vim-extradite'
 Plugin 'vim-indent-guides'
 Plugin 'Lucius'
+Plugin 'chriskempson/base16-vim'
 
 " refactoring in vim
 " Plugin 'LucHermitte/lh-vim-lib'
@@ -103,8 +105,9 @@ syntax enable
 
 "Colors
 set background=dark
-colorscheme lucius " 3DGlasses, Tomorrow-Night
+colorscheme oceandeep "lucius 3DGlasses, Tomorrow-Night
 
+autocmd BufWritePre *.py :%s/\s\+$//e "auto remove trailing spaces on save
 let mapleader =","
 
 " fakeclip settings
@@ -115,13 +118,12 @@ let g:ctrlp_custom_ignore =  'tags\|bin\|tmp\|log\:coverage'
 
 " rubocop settings
 let g:vimrubocop_keymap = 0
-let g:vimrubocop_config = 'config/rubocop.yml'
+let g:vimrubocop_config = '.rubocop.yml'
 
 " vim indent guides
 let g:indent_guides_guide_size = 2
 
-
-nmap <Leader>r :RuboCop<CR>
+nmap <Leader>r :RuboCop -D<CR>
 
 " use Ack instead of grep
 "set grepprg=ack "\ -k
@@ -133,6 +135,17 @@ endif
 "using ag (the silver searcher) with ack.vim
 " let g:ackprg = 'ag --nogroup --nocolor --column'
 
+" ===== ELM support =====================================
+nnoremap <leader>el :ElmEvalLine<CR>
+vnoremap <leader>es :<C-u>ElmEvalSelection<CR>
+nnoremap <leader>em :ElmMakeCurrentFile<CR>
+
+" Compiling the current file on write:
+:au BufWritePost *.elm ElmMakeCurrentFile
+
+" Usually more useful: Compiling a specific file, e.g. "Main.elm", on file write to any file in the project:
+:au BufWritePost *.elm ElmMakeFile("Main.elm")
+" =========================================================
 " Easily convert files to Unix format
 noremap <leader>u :update<CR> :e ++ff=dos<CR> :setlocal<CR> ff=unix
 
@@ -140,8 +153,30 @@ noremap <leader>u :update<CR> :e ++ff=dos<CR> :setlocal<CR> ff=unix
 map <leader>jt <Esc>:%!json_xs -f json -t json-pretty<CR>
 au BufRead,BufNewFile *.json set filetype=json
 
-" ESLINT
+" Syntastic
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_loc_list_height = 6
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_haml_checkers = ['haml_lint']
+let g:syntastic_ruby_haml_args = "-c .haml-lint.yml"
+
+" let g:syntastic_error_symbol = '❌'
+" let g:syntastic_style_error_symbol = '⁉️'
+" let g:syntastic_warning_symbol = '⚠️'
+" let g:syntastic_style_warning_symbol = '💩'
+
+highlight link SyntasticErrorSign SignColumn
+highlight link SyntasticWarningSign SignColumn
+highlight link SyntasticStyleErrorSign SignColumn
+highlight link SyntasticStyleWarningSign SignColum
+nmap <Leader>el :eslint<CR>
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
@@ -160,7 +195,7 @@ map <Leader>ct :!ctags -R .<CR>
 """"""""""""""""""""""
 
 " Commits
-autocmd Filetype gitcommit setlocal spell textwidth=72
+autocmd Filetype gitcommit setlocal spell textwidth=80
 
 " blame
 map <Leader>b :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
@@ -376,16 +411,21 @@ nnoremap <tab> %
 "Remap exiting  instert mode (Esc)
 inoremap jj <esc>
 
-" Unrap the arrow keys (to get used to not using them in insert mode)
-no <down> <Nop>
-no <left> <Nop>
-no <right> <Nop>
-no <up> <Nop>
+map <Up> k
+map <Down> j
+map <Left> h
+map <Right> l
 
-ino <down> <Nop>
-ino <left> <Nop>
-ino <right> <Nop>
-ino <up> <Nop>
+" Unrap the arrow keys (to get used to not using them in insert mode)
+" no <down> <Nop>
+" no <left> <Nop>
+" no <right> <Nop>
+" no <up> <Nop>
+" 
+" ino <down> <Nop>
+" ino <left> <Nop>
+" ino <right> <Nop>
+" ino <up> <Nop>
 "nnoremap  j gj
 "nnoremap k gk
 
