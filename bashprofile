@@ -1,6 +1,6 @@
 export CLICOLOR=1
 export LSCOLORS=Exfxcxdxbxegedabagacad
-#export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx #another option on colors
+# export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx #another option on colors
 
 ###################
 # Default Editor
