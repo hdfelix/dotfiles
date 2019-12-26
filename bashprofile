@@ -8,32 +8,33 @@ export LSCOLORS=Exfxcxdxbxegedabagacad
 
 export EDITOR='vim'
 
-# Run mvim in terminal mode instead of regular vim
-# alias vi='mvim -v'
-# alias vim='mvim -v'
-
-
 ###################
 # Aliases
 ###################
+
+# Run mvim in terminal mode instead of regular vim
+alias vi='mvim -v'
+alias vim='mvim -v'
 
 alias tat='tat.sh'
 alias tl='tmux list-sessions'
 alias ll='ls -lahG'
 # alias rr='clear && bundle exec rspec'
-alias rr='clear && bin/rubocop -DES && bin/rspec -fp --fail-fast spec'
+alias rr='clear && rubocop -DES && bin/rspec -fp --fail-fast spec'
 # alias rr='clear && rspec -fp --fail-fast spec'
-alias ra='clear && bin/rubocop -DES && bin/rspec spec -fp --fail-fast'
+alias ra='clear && rubocop -DES && bin/rspec spec -fp --fail-fast'
 alias gd='git diff --color-words'
 alias rn='clear && bin/rspec --next-failure'
 alias rt='clear && rubocop -DES && bundle exec rake rspec:all'
+alias python=python3
 # alias pt='clear && parallel_rspec -fp --fail-fast spec'
 
 # bash completion
-if [ -f `brew --prefix`/etc/bash_completion ]; then
-  . `brew --prefix`/etc/bash_completion
-fi
+# if [ -f `brew --prefix`/etc/bash_completion ]; then
+#   . `brew --prefix`/etc/bash_completion
+# fi
 
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 # source /usr/local/git/contrib/completion/git-completion.bash
 # GIT_PS1_SHOWDIRTYSTATE=true
 # export PS1='[\u@mbp \w$(__git_ps1)]\$ '
@@ -49,7 +50,7 @@ fi
 ###################
 # JAVA
 ###################
-export JAVA_HOME=$(/usr/libexec/java_home)
+# export JAVA_HOME=$(/usr/libexec/java_home)
 
 ###################
 # Colors
@@ -133,21 +134,72 @@ PS1="\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]${BOLD}\$
 # Path
 ###################
 
-export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
-
+# export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
+export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/go/bin:/usr/bin:/bin:/usr/sbin:/usr/local/sbin:/sbin
 # rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
+# export PATH="$HOME/.rbenv/bin:$PATH"
 
 eval "$(rbenv init -)"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
+# AWS
+export IO_REPO=756518171116.dkr.ecr.us-west-1.amazonaws.com/io-engage-event
+#Postgres Operator
+# server
+export GOPATH=$HOME/odev
+export GOBIN=$GOPATH/bin
+export CO_NAMESPACE=default
+export CO_CMD=kubectl
+export COROOT=$GOPATH/src/github.com/crunchydata/postgres-operator
+export CO_IMAGE_PREFIX=crunchydata
+export CO_IMAGE_TAG=centos7-3.1
+export CO_BASEOS=centos7
+# export KUBECONFIG=~/.kube/config.io
+export KUBECONFIG=~/.kube/config.io
+export KOPS_STATE_STORE=s3://io-engage-cloud-state-store
+
+[ -f ~/.kubectl-aliases ] && source ~/.kubectl_aliases
+
+# Client
+export CO_APISERVER_URL=https://127.0.0.1:8443
+export PGO_CA_CERT=$COROOT/conf/apiserver/server.crt
+export PGO_CLIENT_CERT=$COROOT/conf/apiserver/server.crt
+export PGO_CLIENT_KEY=$COROOT/conf/apiserver/server.key
+
 #HDF added for my own scripts
+# token for io-jwt-plugin
+export JWT_TOKEN='43dUe(rbxvboF4:oZDn6s}/bw#QcL}%a1EHXp^LIWAs:XN%y+O]{+g}#rUNW9U!43dUe(rbxvboF4:oZDn6s}/bw#QcL}%a1EHXp^LIWAs:XN%y+O]{+g}#rUNW9U!'
 export PATH="$HOME/bin:$PATH"
+
+# IO Engage
+export STACKIFY_ENABLED=false
+export STACKIFY_INSTANCE_ENV=dev
+export STACKIFY_INSTANCE_NAME=hdf-local
 
 if [ -f ~/.git-completion.bash ]; then
   source ~/.git-completion.bash
 fi
 
+export PATH="$(brew --prefix qt@5.5)/bin:$PATH"
+
+if [ -f ~/.config/exercism/exercism_completion.bash ]; then
+  . ~/.config/exercism/exercism_completion.bash
+fi
+
 if [ -f ~/.bashrc ]; then
   source ~/.bashrc
 fi
+
+
+complete -C aws_completer aws
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+HISTCONTROL="erasedups:ignorespace"
+HISTIGNORE="history*"
+HISTFILESIZE=100000

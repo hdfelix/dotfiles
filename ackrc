@@ -3,6 +3,7 @@
 --type-add=html=.haml,.html.erb,.html.haml
 --type-add=js=.js,.erb,.coffee
 --type-set=c=.c,.cpp,.ino,.pde,.h
+--type-set=office_time=.otd
 
 --ignore-dir=bower_components
 --ignore-dir=coverage

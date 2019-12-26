@@ -23,11 +23,12 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-haml'
 Plugin 'slim-template/vim-slim.git'
 Plugin 'tpope/vim-markdown'
+Plugin 'rhysd/vim-gfm-syntax'
 Plugin 'tpope/vim-rails'
 Plugin 'int3/vim-extradite'
-Plugin 'vim-indent-guides'
 Plugin 'Lucius'
 Plugin 'chriskempson/base16-vim'
+Plugin 'Tagbar'
 
 " refactoring in vim
 " Plugin 'LucHermitte/lh-vim-lib'
@@ -146,6 +147,7 @@ nnoremap <leader>em :ElmMakeCurrentFile<CR>
 " Usually more useful: Compiling a specific file, e.g. "Main.elm", on file write to any file in the project:
 :au BufWritePost *.elm ElmMakeFile("Main.elm")
 " =========================================================
+
 " Easily convert files to Unix format
 noremap <leader>u :update<CR> :e ++ff=dos<CR> :setlocal<CR> ff=unix
 
@@ -176,26 +178,28 @@ highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
 highlight link SyntasticStyleErrorSign SignColumn
 highlight link SyntasticStyleWarningSign SignColum
-nmap <Leader>el :eslint<CR>
+nmap <Leader>el :!npm run -- 
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
 
-" Emmet custom snippets
+" Emmet
+let g:user_emmet_leader_key='<C-e>'
+"custom snippets
 " let g:user_emmet_settings = webapi#json#decode(join(readfile(expand('~/.snippets_custom.json')), "\n"))
 
 " zoom in/out of vim window
 map <Leader>z <C-w>o
 
 " Index ctags from any project, including those outside Rails
-map <Leader>ct :!ctags -R .<CR>
+map <Leader>ct :!ctags -R --exclude=./vendor .<CR>
 
 """"""""""""""""""""""
 " Git
 """"""""""""""""""""""
 
 " Commits
-autocmd Filetype gitcommit setlocal spell textwidth=80
+autocmd Filetype gitcommit setlocal spell textwidth=100
 
 " blame
 map <Leader>b :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
@@ -265,24 +269,44 @@ function! SendFileViaVtr()
   endif
 endfunction
 
-let g:rspec_command = 'call Send_to_Tmux("bin/rspec {spec}\n")'
-" let g:rspec_command = 'call Send_to_Tmux("bin/rspec {spec}\n")'
+let g:rspec_command = 'call Send_to_Tmux("rspec {spec}\n")'
+" let g:rspec_command = 'call Send_to_Tmux("rspec {spec}\n")'
 
 " vim-rspec config
 " zsh version
-" let g:rspec_command = \"VtrSendCommandToRunner! bundle exec bin/rspec -fp -t ~skip {spec}"
+" let g:rspec_command = \"VtrSendCommandToRunner! bundle exec rspec -fp -t ~skip {spec}"
 " let g:rspec_command = \"VtrSendCommandToRunner! bundle exec rspec -fp -t ~skip {spec}"
 " let g:rspec_command = 'call VimuxRunCommand("bundle exec rspec {spec}\n")'
 
 " bash version
-" let g:rspec_command = \"VtrSendCommandToRunner! bin/rspec -fp -t ~skip {spec}"
+" let g:rspec_command = \"VtrSendCommandToRunner! rspec -fp -t ~skip {spec}"
 " let g:rspec_command = \"VtrSendCommandToRunner! rspec -fp -t ~skip {spec}"
 
 " vim-rspec mappings
-map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>f :call RunCurrentSpecFile()<CR> 
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 map <Leader>g :call RunAllSpecs()<CR>
+
+" vim-test mappings
+" nmap <silent> <leader>s :TestNearest<CR>
+" nmap <silent> <leader>t :TestFile<CR>
+" nmap <silent> <leader>a :testSuite<CR>
+" nmap <silent> <leader>l :TestLast<CR>
+" nmap <silent> <leader>g :testVisit<CR>
+
+" let test#strategy = 'tslime'
+
+map <Leader>st :!npm %
+" opens the quickfix file and window
+let g:rspec_command = 'call VimuxRunCommand("bin/rspec --format progress --require ~/code/rspec_support/quickfix_formatter.rb --format QuickfixFormatter --out quickfix.out {spec}\n")'
+:map <leader>q :cg quickfix.out \| cwindow<CR>
+
+
+" 2017 Youtube video tests: https://www.youtube.com/watch?v=XA2WjJbmmoM&list=WL&index=37&t=3385s
+set path+=** " search all paths; use :find [filename] wihtout path to find files
+command! Maketags !ctags -R .
+""""""
 
 " To run in last session of current iTerm terminal
 let g:rspec_runner = "os_x_iterm2"
@@ -395,9 +419,10 @@ nnoremap <tab> %
 
 "Handling long lines better
 "set wrap
-"set textwidth=79
+set textwidth=120
 "set formatoptions=qrn1
-"set colorcolumn=85
+set colorcolumn=120
+highlight ColorColumn ctermbg=DarkGrey
 
 "TextMate-style invisible characters
 "set list
@@ -440,7 +465,7 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/='<CR>
 nnoremap <leader>w <C-w>v<C-w>l
 
 " Ack
-nnoremap <leader>a :Ack
+nnoremap <leader>a :Ack 
 
 " Map 'ft' to 'fold tag' function
 nnoremap <leader>ft Vatzf
@@ -467,3 +492,8 @@ nnoremap <C-H> <C-W><C-H>
 " Vim Split - More natural split openings
 set splitbelow
 set splitright
+
+" Vim macros
+let @b = 'f{xiRoleType.where(f,xi).first_or_create!xxi!(f}lxr)0j'
+set list
+set listchars=tab:>-

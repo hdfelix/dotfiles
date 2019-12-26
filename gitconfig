@@ -3,7 +3,7 @@
 	email = hdfelix@gmail.com
 
 [core]
-	excludesfile = /Users/Hector/.gitignore_global
+	excludesfile = /Users/hector/.gitignore_global
 	whitespace = trailing-space,space-before-tab
 	editor = /usr/bin/vim
 
@@ -24,6 +24,7 @@
 	stat = true
 
 [alias]
+  tagcommit = rev-list -n 1
 	wtf = !~/code/git-wtf/git-wtf
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	lg2 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
@@ -66,6 +67,7 @@
         publish = !legit publish \"$@\"
         graft = !legit graft \"$@\"
   report = "log --after='august last year' --before='september' --format='%cd|%cn|%s' --date=short --no-merges"
+	whatadded = log --diff-filter=A
 
 [format]
   pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
@@ -76,3 +78,11 @@
 [grep]
 	extendRegexp = true
 	lineNumber = true
+[difftool "sourcetree"]
+	cmd = /Applications/p4merge.app/Contents/MacOS/p4merge \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/p4merge.app/Contents/MacOS/p4merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/hector/.stCommitMsg
